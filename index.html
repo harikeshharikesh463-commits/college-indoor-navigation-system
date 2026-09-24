@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>College Indoor Navigation</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            🏫 College Navigation
+        </div>
+
+        <div class="header-right">
+            <span>Indoor Navigation System</span>
+        </div>
+    </header>
+
+
+    <!-- Main Container -->
+    <main class="container">
+
+        <!-- Left Control Panel -->
+        <section class="control-panel">
+
+            <h1>Find Your Way</h1>
+
+            <p class="subtitle">
+                Select your current location and destination.
+            </p>
+
+
+            <!-- Current Location -->
+            <div class="input-group">
+
+                <label for="startLocation">
+                    📍 Current Location
+                </label>
+
+                <select id="startLocation">
+                    <option value="">Select current location</option>
+                </select>
+
+            </div>
+
+
+            <!-- Destination -->
+            <div class="input-group">
+
+                <label for="destination">
+                    🎯 Destination
+                </label>
+
+                <select id="destination">
+                    <option value="">Select destination</option>
+                </select>
+
+            </div>
+
+
+            <!-- Search Button -->
+            <button id="findRouteBtn" class="primary-btn">
+                Find Shortest Route
+            </button>
+
+
+            <!-- Reset -->
+            <button id="resetBtn" class="reset-btn">
+                Reset
+            </button>
+
+
+            <!-- Route Information -->
+            <div id="routeInfo" class="route-info">
+
+                <h2>Route Information</h2>
+
+                <p id="routeMessage">
+                    Select locations to find a route.
+                </p>
+
+                <div id="routeResult"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Map Section -->
+        <section class="map-section">
+
+            <div class="map-header">
+
+                <h2>College Indoor Map</h2>
+
+                <span id="status">
+                    Ready
+                </span>
+
+            </div>
+
+
+            <!-- SVG Map -->
+            <div class="map-container">
+
+                <object
+                    id="collegeMap"
+                    data="map.svg"
+                    type="image/svg+xml">
+                </object>
+
+            </div>
+
+            <!-- QUICK EXPLORE -->
+
+<div class="quick-explore">
+
+    <div class="quick-title">
+        <h2>✨ Quick Explore</h2>
+        <p>Discover important places in the college</p>
+    </div>
+
+    <div class="explore-cards">
+
+        <div class="explore-card" data-place="lab1">
+            <div class="card-icon">💻</div>
+            <h3>Computer Lab</h3>
+            <p>Ground Floor</p>
+        </div>
+
+        <div class="explore-card" data-place="library">
+            <div class="card-icon">📚</div>
+            <h3>Library</h3>
+            <p>Ground Floor</p>
+        </div>
+
+        <div class="explore-card" data-place="room101">
+            <div class="card-icon">🏫</div>
+            <h3>Classrooms</h3>
+            <p>Room 101</p>
+        </div>
+
+        <div class="explore-card" data-place="facultyRoom">
+            <div class="card-icon">👨‍🏫</div>
+            <h3>Faculty Room</h3>
+            <p>First Floor</p>
+        </div>
+
+        <div class="explore-card" data-place="washroom">
+            <div class="card-icon">🚻</div>
+            <h3>Washroom</h3>
+            <p>First Floor</p>
+        </div>
+
+        <div class="explore-card" data-place="canteen">
+            <div class="card-icon">🍽️</div>
+            <h3>Canteen</h3>
+            <p>Ground Floor</p>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- EXPLORE DETAILS -->
+
+<div id="exploreDetails" class="explore-details">
+
+    <div class="details-header">
+
+        <div class="details-icon" id="detailsIcon">
+            📍
+        </div>
+
+        <div>
+            <span class="details-label">
+                EXPLORE
+            </span>
+
+            <h2 id="detailsTitle">
+                Select a place
+            </h2>
+
+            <p id="detailsSubtitle">
+                Click any place above to see complete information.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="details-content">
+
+        <!-- BASIC INFORMATION -->
+
+        <div class="detail-box">
+
+            <span class="detail-box-icon">📌</span>
+
+            <div>
+                <h4>Location</h4>
+                <p id="detailLocation">
+                    -
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="detail-box">
+
+            <span class="detail-box-icon">🏢</span>
+
+            <div>
+                <h4>Floor</h4>
+                <p id="detailFloor">
+                    -
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="detail-box">
+
+            <span class="detail-box-icon">👥</span>
+
+            <div>
+                <h4>Capacity</h4>
+                <p id="detailCapacity">
+                    -
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="detail-box">
+
+            <span class="detail-box-icon">🕐</span>
+
+            <div>
+                <h4>Availability</h4>
+                <p id="detailAvailability">
+                    -
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DESCRIPTION -->
+
+    <div class="details-description">
+
+        <h3>About this place</h3>
+
+        <p id="detailDescription">
+            Select a location to see more details.
+        </p>
+
+    </div>
+
+
+    <!-- NEARBY -->
+
+    <div class="nearby-section">
+
+        <h3>📍 Nearby Places</h3>
+
+        <div id="nearbyPlaces"
+             class="nearby-places">
+
+            <span>
+                Select a place first
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ACTION BUTTONS -->
+
+    <div class="details-actions">
+
+        <button
+            id="routeButton"
+            class="details-btn primary">
+
+            🧭 Get Directions
+
+        </button>
+
+
+        <button
+            id="floorButton"
+            class="details-btn secondary">
+
+            🏢 View Floor
+
+        </button>
+
+
+        <button
+            id="mapButton"
+            class="details-btn secondary">
+
+            🗺️ Show on Map
+
+        </button>
+
+    </div>
+
+</div>
+            <!-- EXPLORE CAMPUS PANEL -->
+
+<div class="explore-panel">
+
+    <div class="explore-header">
+        <div>
+            <h2>🔎 Explore Campus</h2>
+            <p>Click any room, lab or facility on the map to explore.</p>
+        </div>
+
+        <div class="floor-buttons">
+            <button class="floor-btn active" data-floor="1">
+                Floor 1
+            </button>
+
+            <button class="floor-btn" data-floor="2">
+                Floor 2
+            </button>
+
+            <button class="floor-btn" data-floor="3">
+                Floor 3
+            </button>
+        </div>
+    </div>
+
+
+    <!-- Selected Place Information -->
+
+    <div id="placeInfo" class="place-info">
+
+        <div class="place-icon">
+            🏫
+        </div>
+
+        <div>
+            <h3>Explore the College</h3>
+
+            <p>
+                Click on any location on the map to see
+                information about that place.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+
+            <!-- Legend -->
+            <div class="legend">
+
+                <div>
+                    <span class="legend-dot start-dot"></span>
+                    Current Location
+                </div>
+
+                <div>
+                    <span class="legend-dot destination-dot"></span>
+                    Destination
+                </div>
+
+                <div>
+                    <span class="legend-line"></span>
+                    Shortest Route
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <p>
+            College Indoor Navigation System
+        </p>
+
+        <p>
+            Powered by JavaScript + SVG + Dijkstra Algorithm
+        </p>
+
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script src="navigation.js"></script>
+    <script src="app.js"></script>
+
+    <!-- =========================================
+     COURSES & PROGRAMS SECTION
+========================================= -->
+
+<section class="courses-section">
+
+    <div class="section-heading">
+
+        <span class="section-tag">
+            ACADEMICS
+        </span>
+
+        <h2>
+            Courses & Programs
+        </h2>
+
+        <p>
+            Explore the courses and academic programs
+            offered by the college.
+        </p>
+
+    </div>
+
+
+    <!-- COURSE FILTER -->
+
+    <div class="course-filters">
+
+        <button
+            class="course-filter active"
+            data-category="all">
+
+            All Courses
+
+        </button>
+
+        <button
+            class="course-filter"
+            data-category="engineering">
+
+            Engineering
+
+        </button>
+
+        
+
+        <button
+            class="course-filter"
+            data-category="management">
+
+            Management
+
+        </button>
+       <button class="course-filter" data-category="computer">
+    Computer Science
+</button>
+
+<button class="course-filter" data-category="diploma">
+    Diploma
+</button>
+
+<button class="course-filter" data-category="law">
+    Law
+</button>
+
+<button class="course-filter" data-category="pharmacy">
+    Pharmacy
+</button> 
+
+    </div>
+
+
+    <!-- COURSE CARDS -->
+
+    <div class="courses-grid">
+
+      <!-- B.TECH CSE -->
+<div class="course-card" data-category="engineering">
+    <div class="course-icon">💻</div>
+    <span class="course-category">B.TECH</span>
+    <h3>B.Tech Computer Science & Engineering</h3>
+    <p>Computer Science & Engineering</p>
+    <div class="course-info">
+        <span>⏱️ 4 Years</span>
+        <span>🎓 Undergraduate</span>
+    </div>
+    <button class="course-details-btn" data-course="btech-cse">
+        View Details →
+    </button>
+</div>
+
+
+<!-- B.TECH CS -->
+<div class="course-card" data-category="engineering">
+    <div class="course-icon">🖥️</div>
+    <span class="course-category">B.TECH</span>
+    <h3>B.Tech Computer Science</h3>
+    <p>Computer Science</p>
+    <div class="course-info">
+        <span>⏱️ 4 Years</span>
+        <span>🎓 Undergraduate</span>
+    </div>
+    <button class="course-details-btn" data-course="btech-cs">
+        View Details →
+    </button>
+</div>
+
+
+<!-- B.TECH IT -->
+<div class="course-card" data-category="engineering">
+    <div class="course-icon">🌐</div>
+    <span class="course-category">B.TECH</span>
+    <h3>B.Tech Information Technology</h3>
+    <p>Information Technology</p>
+    <div class="course-info">
+        <span>⏱️ 4 Years</span>
+        <span>🎓 Undergraduate</span>
+    </div>
+    <button class="course-details-btn" data-course="btech-it">
+        View Details →
+    </button>
+</div>
+
+
+<!-- B.TECH DS -->
+<div class="course-card" data-category="engineering">
+    <div class="course-icon">📊</div>
+    <span class="course-category">B.TECH</span>
+    <h3>B.Tech Data Science</h3>
+    <p>Data Science</p>
+    <div class="course-info">
+        <span>⏱️ 4 Years</span>
+        <span>🎓 Undergraduate</span>
+    </div>
+    <button class="course-details-btn" data-course="btech-ds">
+        View Details →
+    </button>
+</div>
+
+
+<!-- B.TECH ME -->
+<div class="course-card" data-category="engineering">
+    <div class="course-icon">⚙️</div>
+    <span class="course-category">B.TECH</span>
+    <h3>B.Tech Mechanical Engineering</h3>
+    <p>Mechanical Engineering</p>
+    <div class="course-info">
+        <span>⏱️ 4 Years</span>
+        <span>🎓 Undergraduate</span>
+    </div>
+    <button class="course-details-btn" data-course="btech-me">
+        View Details →
+    </button>
+</div>
+
+
+<!-- B.TECH ECE -->
+<div class="course-card" data-category="engineering">
+    <div class="course-icon">📡</div>
+    <span class="course-category">B.TECH</span>
+    <h3>B.Tech Electronics & Communication</h3>
+    <p>Electronics & Communication Engineering</p>
+    <div class="course-info">
+        <span>⏱️ 4 Years</span>
+        <span>🎓 Undergraduate</span>
+    </div>
+    <button class="course-details-btn" data-course="btech-ece">
+        View Details →
+    </button>
+</div>
+
+
+<!-- B.TECH CIVIL -->
+<div class="course-card" data-category="engineering">
+    <div class="course-icon">🏗️</div>
+    <span class="course-category">B.TECH</span>
+    <h3>B.Tech Civil Engineering</h3>
+    <p>Civil Engineering</p>
+    <div class="course-info">
+        <span>⏱️ 4 Years</span>
+        <span>🎓 Undergraduate</span>
+    </div>
+    <button class="course-details-btn" data-course="btech-civil">
+        View Details →
+    </button>
+</div>
+
+
+<!-- B.TECH ELECTRICAL -->
+<div class="course-card" data-category="engineering">
+    <div class="course-icon">⚡</div>
+    <span class="course-category">B.TECH</span>
+    <h3>B.Tech Electrical Engineering</h3>
+    <p>Electrical Engineering</p>
+    <div class="course-info">
+        <span>⏱️ 4 Years</span>
+        <span>🎓 Undergraduate</span>
+    </div>
+    <button class="course-details-btn" data-course="btech-electrical">
+        View Details →
+    </button>
+</div>
+
+
+<!-- M.TECH -->
+<div class="course-card" data-category="engineering">
+    <div class="course-icon">🎓</div>
+    <span class="course-category">POSTGRADUATE</span>
+    <h3>M.Tech</h3>
+    <p>Master of Technology</p>
+    <div class="course-info">
+        <span>⏱️ 2 Years</span>
+        <span>🎓 Postgraduate</span>
+    </div>
+    <button class="course-details-btn" data-course="mtech">
+        View Details →
+    </button>
+</div>
+
+
+<!-- BCA -->
+<div class="course-card" data-category="computer">
+    <div class="course-icon">💻</div>
+    <span class="course-category">COMPUTER</span>
+    <h3>BCA</h3>
+    <p>Bachelor of Computer Applications</p>
+    <div class="course-info">
+        <span>⏱️ 3 Years</span>
+        <span>🎓 Undergraduate</span>
+    </div>
+    <button class="course-details-btn" data-course="bca">
+        View Details →
+    </button>
+</div>
+
+
+<!-- MCA -->
+<div class="course-card" data-category="computer">
+    <div class="course-icon">🧑‍💻</div>
+    <span class="course-category">COMPUTER</span>
+    <h3>MCA</h3>
+    <p>Master of Computer Applications</p>
+    <div class="course-info">
+        <span>⏱️ 2 Years</span>
+        <span>🎓 Postgraduate</span>
+    </div>
+    <button class="course-details-btn" data-course="mca">
+        View Details →
+    </button>
+</div>
+
+
+<!-- BBA -->
+<div class="course-card" data-category="management">
+    <div class="course-icon">📈</div>
+    <span class="course-category">MANAGEMENT</span>
+    <h3>BBA</h3>
+    <p>Bachelor of Business Administration</p>
+    <div class="course-info">
+        <span>⏱️ 3 Years</span>
+        <span>🎓 Undergraduate</span>
+    </div>
+    <button class="course-details-btn" data-course="bba-new">
+        View Details →
+    </button>
+</div>
+
+
+<!-- MBA -->
+<div class="course-card" data-category="management">
+    <div class="course-icon">💼</div>
+    <span class="course-category">MANAGEMENT</span>
+    <h3>MBA</h3>
+    <p>Master of Business Administration</p>
+    <div class="course-info">
+        <span>⏱️ 2 Years</span>
+        <span>🎓 Postgraduate</span>
+    </div>
+    <button class="course-details-btn" data-course="mba">
+        View Details →
+    </button>
+</div>
+
+
+<!-- POLYTECHNIC -->
+<div class="course-card" data-category="diploma">
+    <div class="course-icon">🔧</div>
+    <span class="course-category">DIPLOMA</span>
+    <h3>Polytechnic</h3>
+    <p>Diploma Engineering Programs</p>
+    <div class="course-info">
+        <span>⏱️ 3 Years</span>
+        <span>🎓 Diploma</span>
+    </div>
+    <button class="course-details-btn" data-course="polytechnic">
+        View Details →
+    </button>
+</div>
+
+
+<!-- LLB -->
+<div class="course-card" data-category="law">
+    <div class="course-icon">⚖️</div>
+    <span class="course-category">LAW</span>
+    <h3>LLB</h3>
+    <p>Bachelor of Laws</p>
+    <div class="course-info">
+        <span>⏱️ 3 Years</span>
+        <span>🎓 Undergraduate</span>
+    </div>
+    <button class="course-details-btn" data-course="llb">
+        View Details →
+    </button>
+</div>
+
+
+<!-- B.PHARMA -->
+<div class="course-card" data-category="pharmacy">
+    <div class="course-icon">💊</div>
+    <span class="course-category">PHARMACY</span>
+    <h3>B.Pharm</h3>
+    <p>Bachelor of Pharmacy</p>
+    <div class="course-info">
+        <span>⏱️ 4 Years</span>
+        <span>🎓 Undergraduate</span>
+    </div>
+    <button class="course-details-btn" data-course="bpharma">
+        View Details →
+    </button>
+</div>
+
+
+<!-- D.PHARMA -->
+<div class="course-card" data-category="pharmacy">
+    <div class="course-icon">💉</div>
+    <span class="course-category">PHARMACY</span>
+    <h3>D.Pharm</h3>
+    <p>Diploma in Pharmacy</p>
+    <div class="course-info">
+        <span>⏱️ 2 Years</span>
+        <span>🎓 Diploma</span>
+    </div>
+    <button class="course-details-btn" data-course="dpharma">
+        View Details →
+    </button>
+</div>
+
+
+        
+
+        <!-- COURSE 3 -->
+
+        <div
+            class="course-card"
+            data-category="science">
+
+            <div class="course-icon">
+                🔬
+            </div>
+
+            <span class="course-category">
+                SCIENCE
+            </span>
+
+            <h3>
+                B.Sc Computer Science
+            </h3>
+
+            <p>
+                Computer Science
+            </p>
+
+            <div class="course-info">
+
+                <span>
+                    ⏱️ 3 Years
+                </span>
+
+                <span>
+                    🎓 Undergraduate
+                </span>
+
+            </div>
+
+            <button
+                class="course-details-btn"
+                data-course="bsc">
+
+                View Details →
+
+            </button>
+
+        </div>
+
+
+        <!-- COURSE 4 -->
+
+        <div
+            class="course-card"
+            data-category="management">
+
+            <div class="course-icon">
+                📊
+            </div>
+
+            <span class="course-category">
+                MANAGEMENT
+            </span>
+
+            <h3>
+                Bachelor of Business Administration
+            </h3>
+
+            <p>
+                Business Administration
+            </p>
+
+            <div class="course-info">
+
+                <span>
+                    ⏱️ 3 Years
+                </span>
+
+                <span>
+                    🎓 Undergraduate
+                </span>
+
+            </div>
+
+            <button
+                class="course-details-btn"
+                data-course="bba">
+
+                View Details →
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- COURSE DETAILS -->
+
+    <div
+        id="courseDetails"
+        class="course-details-panel">
+
+        <div class="course-details-header">
+
+            <div
+                id="courseDetailsIcon"
+                class="course-details-icon">
+
+                🎓
+
+            </div>
+
+            <div>
+
+                <span>
+                    COURSE DETAILS
+                </span>
+
+                <h2 id="courseDetailsTitle">
+                    Select a course
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="course-details-grid">
+
+            <div class="course-detail-item">
+
+                <small>
+                    Duration
+                </small>
+
+                <strong id="courseDuration">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="course-detail-item">
+
+                <small>
+                    Eligibility
+                </small>
+
+                <strong id="courseEligibility">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="course-detail-item">
+
+                <small>
+                    Seats
+                </small>
+
+                <strong id="courseSeats">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="course-detail-item">
+
+                <small>
+                    Annual Fee
+                </small>
+
+                <strong id="courseFee">
+                    -
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="course-description">
+
+            <h3>
+                About the Course
+            </h3>
+
+            <p id="courseDescription">
+                Select a course to see complete details.
+            </p>
+
+        </div>
+
+
+        <div class="course-subjects">
+
+            <h3>
+                📚 Major Subjects
+            </h3>
+
+            <div
+                id="courseSubjects"
+                class="subject-list">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+     FEES & PAYMENT SECTION
+========================================= -->
+
+<section class="fees-section">
+
+    <div class="section-heading">
+
+        <span class="section-tag">
+            FINANCE
+        </span>
+
+        <h2>
+            Fees & Payment
+        </h2>
+
+        <p>
+            Check course fees, installment schedule,
+            payment deadlines and payment information.
+        </p>
+
+    </div>
+
+
+    <!-- COURSE SELECTOR -->
+
+    <div class="fee-selector">
+
+        <label for="feeCourseSelect">
+            Select Course
+        </label>
+
+        <select id="feeCourseSelect">
+
+            <option value="btech-cse">
+                B.Tech Computer Science & Engineering
+            </option>
+
+            <option value="btech-cs">
+                B.Tech Computer Science
+            </option>
+
+            <option value="btech-it">
+                B.Tech Information Technology
+            </option>
+
+            <option value="btech-ds">
+                B.Tech Data Science
+            </option>
+
+            <option value="btech-me">
+                B.Tech Mechanical Engineering
+            </option>
+
+            <option value="btech-ece">
+                B.Tech Electronics & Communication
+            </option>
+
+            <option value="btech-civil">
+                B.Tech Civil Engineering
+            </option>
+
+            <option value="btech-electrical">
+                B.Tech Electrical Engineering
+            </option>
+
+            <option value="mtech">
+                M.Tech
+            </option>
+
+            <option value="bca">
+                BCA
+            </option>
+
+            <option value="mca">
+                MCA
+            </option>
+
+            <option value="bba-new">
+                BBA
+            </option>
+
+            <option value="mba">
+                MBA
+            </option>
+
+            <option value="polytechnic">
+                Polytechnic
+            </option>
+
+            <option value="llb">
+                LLB
+            </option>
+
+            <option value="bpharma">
+                B.Pharm
+            </option>
+
+            <option value="dpharma">
+                D.Pharm
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- FEE SUMMARY -->
+
+    <div class="fee-summary">
+
+        <div class="fee-main-card">
+
+            <span>
+                TOTAL COURSE FEE
+            </span>
+
+            <h2 id="totalCourseFee">
+                ₹80,000
+            </h2>
+
+            <p id="selectedFeeCourse">
+                B.Tech Computer Science & Engineering
+            </p>
+
+        </div>
+
+
+        <div class="fee-small-card">
+
+            <span>
+                ANNUAL FEE
+            </span>
+
+            <strong id="annualFee">
+                ₹20,000
+            </strong>
+
+        </div>
+
+
+        <div class="fee-small-card">
+
+            <span>
+                INSTALLMENTS
+            </span>
+
+            <strong id="installmentCount">
+                4
+            </strong>
+
+        </div>
+
+
+        <div class="fee-small-card">
+
+            <span>
+                PAYMENT MODE
+            </span>
+
+            <strong>
+                Online / Offline
+            </strong>
+
+        </div>
+
+    </div>
+     
+      <!-- FEE SUMMARY -->
+
+    <div class="fee-summary">
+
+        <div class="fee-main-card">
+
+            <span>
+                TOTAL COURSE FEE
+            </span>
+
+            <h2 id="totalCourseFee">
+                ₹80,000
+            </h2>
+
+            <p id="selectedFeeCourse">
+               M.Tech
+            </p>
+
+        </div>
+
+
+        <div class="fee-small-card">
+
+            <span>
+                ANNUAL FEE
+            </span>
+
+            <strong id="annualFee">
+                ₹20,000
+            </strong>
+
+        </div>
+
+
+        <div class="fee-small-card">
+
+            <span>
+                INSTALLMENTS
+            </span>
+
+            <strong id="installmentCount">
+                4
+            </strong>
+
+        </div>
+
+
+        <div class="fee-small-card">
+
+            <span>
+                PAYMENT MODE
+            </span>
+
+            <strong>
+                Online / Offline
+            </strong>
+
+        </div>
+
+    </div>
+
+
+      <!-- FEE SUMMARY -->
+
+    <div class="fee-summary">
+
+        <div class="fee-main-card">
+
+            <span>
+                TOTAL COURSE FEE
+            </span>
+
+            <h2 id="totalCourseFee">
+                ₹12,5000
+            </h2>
+
+            <p id="selectedFeeCourse">
+                B.Pharma
+            </p>
+
+        </div>
+
+
+        <div class="fee-small-card">
+
+            <span>
+                ANNUAL FEE
+            </span>
+
+            <strong id="annualFee">
+                ₹31,25
+            </strong>
+
+        </div>
+
+
+        <div class="fee-small-card">
+
+            <span>
+                INSTALLMENTS
+            </span>
+
+            <strong id="installmentCount">
+                4
+            </strong>
+
+        </div>
+
+
+        <div class="fee-small-card">
+
+            <span>
+                PAYMENT MODE
+            </span>
+
+            <strong>
+                Online / Offline
+            </strong>
+
+        </div>
+
+    </div>
+
+
+      <!-- FEE SUMMARY -->
+
+    <div class="fee-summary">
+
+        <div class="fee-main-card">
+
+            <span>
+                TOTAL COURSE FEE
+            </span>
+
+            <h2 id="totalCourseFee">
+                ₹50,000
+            </h2>
+
+            <p id="selectedFeeCourse">
+                BCA(Bachelor in Computer Applications)
+            </p>
+
+        </div>
+
+
+        <div class="fee-small-card">
+
+            <span>
+                ANNUAL FEE
+            </span>
+
+            <strong id="annualFee">
+                ₹12,500
+            </strong>
+
+        </div>
+
+
+        <div class="fee-small-card">
+
+            <span>
+                INSTALLMENTS
+            </span>
+
+            <strong id="installmentCount">
+                4
+            </strong>
+
+        </div>
+
+
+        <div class="fee-small-card">
+
+            <span>
+                PAYMENT MODE
+            </span>
+
+            <strong>
+                Online / Offline
+            </strong>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+    <!-- INSTALLMENT SCHEDULE -->
+
+    <div class="installment-section">
+
+        <div class="subsection-title">
+
+            <div>
+
+                <span class="section-tag">
+                    PAYMENT PLAN
+                </span>
+
+                <h3>
+                    Installment Schedule
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="installmentList"
+            class="installment-list">
+
+            <!-- JavaScript will load installments here -->
+
+        </div>
+
+    </div>
+
+
+    <!-- PAYMENT INFORMATION -->
+
+    <div class="payment-information">
+
+        <div class="payment-info-card">
+
+            <div class="payment-info-icon">
+                💳
+            </div>
+
+            <h3>
+                Payment Methods
+            </h3>
+
+            <ul>
+
+                <li>
+                    UPI / QR Payment
+                </li>
+
+                <li>
+                    Debit / Credit Card
+                </li>
+
+                <li>
+                    Net Banking
+                </li>
+
+                <li>
+                    Bank Transfer
+                </li>
+
+                <li>
+                    College Fee Counter
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="payment-info-card">
+
+            <div class="payment-info-icon">
+                ⚠️
+            </div>
+
+            <h3>
+                Late Payment
+            </h3>
+
+            <p>
+                Students should submit their fees
+                before the specified due date.
+                Late payment may be subject to
+                applicable college rules and charges.
+            </p>
+
+        </div>
+
+
+        <div class="payment-info-card">
+
+            <div class="payment-info-icon">
+                📄
+            </div>
+
+            <h3>
+                Important Information
+            </h3>
+
+            <p>
+                Keep your payment receipt safely
+                after completing the fee payment.
+                Always verify the official college
+                fee notice before making payment.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- FEE NOTICE -->
+
+    <div class="fee-notice">
+
+        <div class="notice-icon">
+            📢
+        </div>
+
+        <div>
+
+            <h3>
+                Fee Payment Notice
+            </h3>
+
+            <p>
+                Fee amounts and deadlines shown here
+                should be verified with the official
+                college administration before payment.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+</body>
+</html>
